@@ -1,0 +1,41 @@
+table, tr, td{
+    border: 1px solid black;
+}
+
+tr, td{
+    width: 25px;
+    height: 25px;
+}
+
+.alive{
+    background-color: black;
+}
+
+.flagcell{
+    background-color: yellow;
+}
+
+.clicked1{
+    color: green;
+}
+.clicked2{
+    color: orange;
+}
+.clicked3{
+    color: blue;
+}
+.clicked4{
+    color: indigo;
+}
+.clicked5{
+    color: violet;
+}
+.clicked6{
+    color: maroon;
+}
+.clicked7{
+    color: chartreuse;
+}
+.clicked8{
+    color: black;
+}
