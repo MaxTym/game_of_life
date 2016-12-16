@@ -7,15 +7,21 @@
         <link rel="stylesheet" href="css/game_of_life.css">
     </head>
     <body>
-        <button id="startButton">start</button>
-        <div id="gameboard"></div>
-        <span id="clock"></span>
+
+        Enter a board size:<br>
+        <input id="x" type="text">width<br>
+        <input id="y" type="text">height<br>
+        <button id="drawBoard">Draw a board</button><br>
+
+        <div align="center">
+            <button id="timeButton">start</button>
+            <button id="erase">erase</button>
+        </div>
+        <div align="center" id="gameboard">
+        </div>
 
 
-        <script
-  src="https://code.jquery.com/jquery-3.1.1.min.js"
-  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-  crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script type="text/javascript" src="js/game_of_life.js"></script>
     </body>
 </html>

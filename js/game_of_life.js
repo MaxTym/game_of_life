@@ -1,108 +1,76 @@
+function insertLife(){
+    $(this).addClass("alive")
+}
 
-function createTable(){
-    current_seconds = 0
-    var rows = 20
-    var cols = 20
-    var $table = $("<table>")
-    $("#gameboard").empty()
-    $("#gameboard").append($table)
-    for(var row = 0; row < rows; row++){
-        var $row = $("<tr>")
-        $table.append($row)
-        for(var col = 0; col < cols; col++){
-            var $col = $("<td>")
-            $col.addClass("dead")
-            $col.click(clickCell)
-            $row.append($col)
-            $col.attr("id", row + "_" + col)
+function toggleTime(){
+    var change = document.getElementById("timeButton");
+    if (change.innerHTML == "start"){
+        change.innerHTML = "stop";
         }
+    else {
+        change.innerHTML = "start";
+        }
+    if(!clock){
+        clock = setInterval(lifeDeath, 500)
+    }
+    else{
+        clearInterval(clock)
+        clock = 0
     }
 }
 
-
-function createLife(){
-    table = createTable()
-    console.log(table)
-}
-
-
-function rightClick(event){
-    $(this).toggleClass("dead")
-}
-
-
-function clickCell(){
-    $(this).toggleClass("alive")
-    findNeighbors($(this))
-}
-
-function haveFun(){
-    console.log("Fun")
-}
-
-
-function notFun(){
-    console.log("Not fun")
-
-}
-
-
-function findNeighbors(cell){
-    console.log(cell.attr("id").split("_"))
+function examineSurroundings(cell){
+    if (!cell.attr("id")){
+        return 0
+    }
     var x = parseInt(cell.attr("id").split("_")[0])
     var y = parseInt(cell.attr("id").split("_")[1])
     var count = 0
-    var neighbors = [$("#" + (x-1) + "_" + (y-1)),
-                     $("#" +  x    + "_" + (y-1)),
-                     $("#" + (x+1) + "_" + (y-1)),
-                     $("#" + (x-1) + "_" +  y),
-                     $("#" + (x+1) + "_" +  y),
-                     $("#" + (x-1) + "_" + (y+1)),
-                     $("#" +  x    + "_" + (y+1)),
-                     $("#" + (x+1) + "_" + (y+1))]
-    for(var i = 0; i < neighbors.length; i++) {
-        if (neighbors[i].hasClass("dead alive")){
+    var surroundings = [$("#" + (x - 1) + "_" + (y - 1)),
+                        $("#" + (x + 1) + "_" + (y + 1)),
+                        $("#" + (x + 1) + "_" + (y - 1)),
+                        $("#" + (x - 1) + "_" + (y + 1)),
+                        $("#" + (x - 1) + "_" + y),
+                        $("#" + x + "_" + (y - 1)),
+                        $("#" + (x + 1) + "_" + y),
+                        $("#" + x + "_" + (y + 1)),
+                        ]
+    for(var i = 0; i < surroundings.length; i ++){
+        if (surroundings[i].hasClass("alive")){
             count++
         }
     }
-    console.log(count)
-    if (count >=2) {
-        for(var i in neighbors){
-            console.log(neighbors[i])
-        }
-        if (count >3){
-            notFun(cell)
-        }
-        else {
-            haveFun(cell)
+    return count
+}
+
+function lifeDeath(){
+    var current_table = $("#world")
+    var rows = $("#x").val()
+    var cols = $("#y").val()
+    var $table = $("<table>")
+    for (var row = 0; row < rows; row++){
+        $row = $("<tr>")
+        $table.append($row)
+        for (var col = 0; col < cols; col++){
+            $col = $("<td>")
+            $row.append($col)
+            $col.attr("id", row + "_" + col)
+            var eco = examineSurroundings($('#' + row + '_' + col))
+            $col.click(insertLife)
+            if (eco == 3 || (eco == 2 && $('#'+row + "_" + col).hasClass("alive"))){
+                $col.addClass("alive")
+            }
         }
     }
-    // if (count >3) {
-    //     for(var i = 0; neighbors.length; i++) {
-    //         neighbors[i].rightClick()
-    //     }
-    // }
-    cell.addClass("clicked"+count)
-    cell.html(count + "")
+    $("#gameboard").empty()
+    $("#gameboard").append($table)
 }
 
-
-function gameWon(){
+function erase(){
+    $("#gameboard").empty()
 }
 
-
-function gameLost(){
-    clearInterval(clock)
-    console.log("You lose")
-    $(".bombcell").addClass("redcell")
-    $('td').unbind("click").unbind("contextmenu")
-}
-
-var clock
-var current_seconds = 0
-function updateClock(){
-    $("#clock").html(current_seconds++)
-}
-createLife()
-$("#cols")
-$("#startButton").click(createTable)
+var clock = false
+$("#drawBoard").click(lifeDeath)
+$("#timeButton").click(toggleTime)
+$("#erase").click(erase)

@@ -3,39 +3,25 @@ table, tr, td{
 }
 
 tr, td{
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
 }
 
 .alive{
-    background-color: black;
+    background-color: red;
 }
 
-.flagcell{
-    background-color: yellow;
+#x{
+    width: 30px;
+    margin-left: 40px;
+    margin-top:20px;
 }
 
-.clicked1{
-    color: green;
+#y{
+    width: 30px;
+    margin-left: 40px;
 }
-.clicked2{
-    color: orange;
-}
-.clicked3{
-    color: blue;
-}
-.clicked4{
-    color: indigo;
-}
-.clicked5{
-    color: violet;
-}
-.clicked6{
-    color: maroon;
-}
-.clicked7{
-    color: chartreuse;
-}
-.clicked8{
-    color: black;
+
+#drawBoard{
+    margin-left: 40px;
 }
